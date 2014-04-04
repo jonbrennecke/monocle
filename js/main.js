@@ -13,40 +13,23 @@ $( document ).ready( function(){
 	*	class: <string> name of the CSS class to give the containing element ( defaults to 'glossy' )
 	* }
 	* 
-	* 
 	*/
 	function Loupe( img, opt ) {
 
-		// parameters
 		this.img = img;
 		this.zoom = opt.zoom || 2;
 
-		var className =  opt.class || "glossy";
-
 		// create the loupe
-		this.div = $("<div id='lens-container' class='" + className + "'><div id='lens'></div></div>").appendTo( "#the-container" );
+		this.div = $("<div id='lens-container' class='" +  ( opt.class || "glossy" ) + "'><div id='lens'></div></div>")
+			.appendTo( "#the-container" );
 
 		this.div.width( opt.size ).height( opt.size );
 
 		// after setting the size (which may be in px, em, or other units) get the computed size (in px)
 		this.size = +window.getComputedStyle( this.div[0], null ).width.replace( 'px', '' );
 
-		// this.div.hover( 
-		// 	// mouseover
-		// 	function () {
-		// 		$( this )
-		// 			.animate({ width : "+=10px", height : "+=10px" },{ duration : 10, easing : "easeInQuad" })
-		// 			.promise()
-		// 			.done( function () {
-		// 				// $( this ).animate({ width : "-=10px", height : "-=10px" },{ duration : 10, easing : "easeInQuad" });
-		// 			});
-		// 	}, 
-
-		// 	// mouseout
-		// 	function () {
-		// 		// $( this ).animate({ width : "-=10px", height : "-=10px" },{ duration : 10, easing : "easeInQuad" });
-		// 	}
-		// );
+		// attach the mouseover/out callbacks
+		this.div.hover( this.mouseover, this.mouseout );
 
 		// wait for the image to load or we'll have problems...
 		this.img.onload = function(){
@@ -100,13 +83,38 @@ $( document ).ready( function(){
 				left : - ( ui.offset.left * this.zoom - ui.offset.left ) + this.size / 2
 			});
  
+		},
+
+		/**
+		 * called on mouseover over the loupe
+		 *
+		 * @param e - event object 
+		 * @param ui - drag properties
+		 */
+		mouseover : function () {
+			// $( this )
+			// 	.animate({ width : "+=10px", height : "+=10px" },{ duration : 10, easing : "easeInQuad" })
+			// 	.promise()
+			// 	.done( function () {
+			// 		// $( this ).animate({ width : "-=10px", height : "-=10px" },{ duration : 10, easing : "easeInQuad" });
+			// 	});
+		},
+
+		/**
+		 * called on mouseout over the loupe
+		 *
+		 * @param e - event object 
+		 * @param ui - drag properties
+		 */
+		mouseout : function () {
+
 		}
 	};
 
 
 	/**
 	 *
-	 * Magnifier Loupe as a jQuery plugin
+	 * magnifier loupe jQuery plugin
 	 *
 	 *
 	 * @param json array opt - array of options
@@ -132,7 +140,7 @@ $( document ).ready( function(){
 	$("#the-image").loupe({
 		zoom : 1.5,
 		size : "10em",
-		class : "flat" // "Flat", "Metro"
+		class : "smooth" // "Flat", "Metro"
 	});
 
 

@@ -1,3 +1,8 @@
+/**
+ * 
+ * Magnifying Glass Loupe
+ *
+ */
 
 // compass imports for cross-browser support
 @import "compass/css3/images";
@@ -134,9 +139,73 @@
 }
 
 
+/**
+ * ======================================================
+ * ===================== Smooth Style ===================
+ * ======================================================
+ *
+ * Coloring/Design for loupe
+ *
+ */
+@mixin smooth {
 
-// for parsimony, some styles that are repeated for both #lens and #lens-image-container
-// within the 'loupe' mixin below
+	// vars
+	$border-color: #fff;
+
+	// ---------------- #lens-container ----------------
+
+	background: $border-color;
+	// @include box-shadow( 0px 0px 150px rgba(#000,0.2) );
+	@include background(
+		linear-gradient( top, color-stops( #fff, #999 ) )
+	);
+
+	@include box-shadow(
+		0px 50px 50px -50px red,
+		0px 50px 50px -50px rgba(#000,0.7)
+	);
+
+	div#lens {
+		overflow: hidden;
+		@include background(
+			linear-gradient( top, color-stops( #999, #fff ) )
+		);
+		z-index: 0;
+
+		&::before {
+			// @include background( linear-gradient( 200deg, color-stops( rgba(#fff,0.3), rgba(#fff,0.3) 20%, rgba(#fff,0) 20% )) );
+		}
+	}
+
+	div#lens-image-container {
+		width: 85%;
+		height: 85%;
+		top: 7.5%;
+		left: 7.5%;
+
+		&::before {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			z-index: 3;
+			border-radius: 50%;
+
+			@include box-shadow(
+				0px 50px 50px -40px rgba(#000,0.7) inset
+			);
+		}
+	}
+}
+
+
+
+/**
+ *
+ * for parsimony, some styles that are repeated for both #lens and #lens-image-container
+ * within the 'loupe' mixin below
+ *
+ */
 @mixin inner ( $size, $border-width ) {
 	position: absolute;
 	width: percentage( ( $size - $border-width * 2 ) / $size );
@@ -145,6 +214,7 @@
 	left: percentage($border-width / $size);
 	border-radius: 50%;
 }
+
 
 /*
  *
@@ -170,16 +240,7 @@
 	transition: width $time, height $time, margin $time;
 
 	// the cursor disappears when clicked
-	&:hover { 
-		cursor: pointer; 
-
-		// expand animation
-		$factor: 0.25;
-		// width: ($size * ($factor + 1) );
-		// height: ($size * ($factor + 1) );
-		// margin-left: -($size * ($factor / 2) );
-		// margin-top: -($size * ($factor / 2) );
-	}
+	&:hover { cursor: pointer; }
 
 	&:active { cursor: none; }
 	
@@ -218,16 +279,22 @@
 	@else if $style == "flat" {
 		@include flat;
 	}
+	@else if $style == "smooth" {
+		@include smooth;
+	}
 	@else {
 		@include glossy;
 	}
 }
 
 
-// 
+/**
+ * 
+ *
+ */
 div#lens-container {
 
-	$styles: metro flat glossy;
+	$styles: metro flat glossy smooth;
 
 	@each $style in $styles {
 		&.#{$style} {
