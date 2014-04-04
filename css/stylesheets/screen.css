@@ -67,17 +67,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-/* line 8, ../sass/loupe.scss */
-div#the-container {
-  width: 50em;
-  height: auto;
-}
-/* line 12, ../sass/loupe.scss */
-div#the-container img#the-image {
-  width: 100%;
-  height: 100%;
-}
-
 /**
  * ====================================================
  * ===================== 3D Style =====================
@@ -106,44 +95,43 @@ div#the-container img#the-image {
  *
  * Draggable Lens element
  * 
- * basic positioning and sizing; the design is mostly applied in the 'style' mixin
+ * basic positioning and sizing; the design is mostly applied in the style mixin
  * 
  */
-/* line 155, ../sass/loupe.scss */
-div#lens-container {
+/* line 233, ../sass/loupe.scss */
+div#lens-container.metro {
+  position: absolute;
   top: 0;
   left: 0;
   height: 200px;
   width: 200px;
   border-radius: 50%;
-  background: #333333;
-  background: -moz-linear-gradient(290deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 51%), -moz-radial-gradient(center center, #333333, #1a1a1a);
-  background: -webkit-linear-gradient(290deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 51%), -webkit-radial-gradient(center center, #333333, #1a1a1a);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 51%), radial-gradient(center center, #333333, #1a1a1a);
-  -moz-box-shadow: 0px 3px 5px -3px #b3b3b3 inset, 0px -3px 5px -3px #1a1a1a inset, 0px -3px 5px -3px black inset, 0px 3px 15px -3px black, 0px 3px 1px -1px #333333, 0px 0px 1px 1px #333333;
-  -webkit-box-shadow: 0px 3px 5px -3px #b3b3b3 inset, 0px -3px 5px -3px #1a1a1a inset, 0px -3px 5px -3px black inset, 0px 3px 15px -3px black, 0px 3px 1px -1px #333333, 0px 0px 1px 1px #333333;
-  box-shadow: 0px 3px 5px -3px #b3b3b3 inset, 0px -3px 5px -3px #1a1a1a inset, 0px -3px 5px -3px black inset, 0px 3px 15px -3px black, 0px 3px 1px -1px #333333, 0px 0px 1px 1px #333333;
+  transition: width 0.3s, height 0.3s, margin 0.3s;
+  background: #ef3c43;
+  -moz-box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.2);
 }
-/* line 168, ../sass/loupe.scss */
-div#lens-container:hover {
+/* line 173, ../sass/loupe.scss */
+div#lens-container.metro:hover {
   cursor: pointer;
 }
-/* line 169, ../sass/loupe.scss */
-div#lens-container:active {
+/* line 184, ../sass/loupe.scss */
+div#lens-container.metro:active {
   cursor: none;
 }
-/* line 181, ../sass/loupe.scss */
-div#lens-container div#lens {
+/* line 186, ../sass/loupe.scss */
+div#lens-container.metro div#lens {
   position: absolute;
-  width: 180px;
-  height: 180px;
-  top: 10px;
-  left: 10px;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
   border-radius: 50%;
   z-index: 1;
 }
-/* line 185, ../sass/loupe.scss */
-div#lens-container div#lens::before {
+/* line 190, ../sass/loupe.scss */
+div#lens-container.metro div#lens::before {
   content: '';
   position: absolute;
   width: 50%;
@@ -152,27 +140,168 @@ div#lens-container div#lens::before {
   top: 5%;
   border-radius: 50%;
 }
-/* line 196, ../sass/loupe.scss */
-div#lens-container div#lens-image-container {
+/* line 201, ../sass/loupe.scss */
+div#lens-container.metro div#lens-image-container {
   position: absolute;
-  width: 180px;
-  height: 180px;
-  top: 10px;
-  left: 10px;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
   border-radius: 50%;
   overflow: hidden;
 }
-/* line 200, ../sass/loupe.scss */
-div#lens-container div#lens-image-container img#lens-image {
+/* line 205, ../sass/loupe.scss */
+div#lens-container.metro div#lens-image-container img#lens-image {
   position: absolute;
 }
-/* line 49, ../sass/loupe.scss */
-div#lens-container:hover {
-  width: 210px;
-  height: 210px;
+/* line 123, ../sass/loupe.scss */
+div#lens-container.metro div#lens {
+  overflow: hidden;
 }
-/* line 54, ../sass/loupe.scss */
-div#lens-container div#lens {
+/* line 126, ../sass/loupe.scss */
+div#lens-container.metro div#lens::before {
+  width: 90%;
+  height: 90%;
+  left: 5%;
+  top: 5%;
+  background: -moz-linear-gradient(250deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0) 20%);
+  background: -webkit-linear-gradient(250deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0) 20%);
+  background: linear-gradient(200deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0) 20%);
+}
+/* line 233, ../sass/loupe.scss */
+div#lens-container.flat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  transition: width 0.3s, height 0.3s, margin 0.3s;
+  -moz-box-shadow: 0px 0px 1px 1px #655c3b, 0px -1px 1px 1px #efece3, 0px 3px 15px -3px black;
+  -webkit-box-shadow: 0px 0px 1px 1px #655c3b, 0px -1px 1px 1px #efece3, 0px 3px 15px -3px black;
+  box-shadow: 0px 0px 1px 1px #655c3b, 0px -1px 1px 1px #efece3, 0px 3px 15px -3px black;
+}
+/* line 173, ../sass/loupe.scss */
+div#lens-container.flat:hover {
+  cursor: pointer;
+}
+/* line 184, ../sass/loupe.scss */
+div#lens-container.flat:active {
+  cursor: none;
+}
+/* line 186, ../sass/loupe.scss */
+div#lens-container.flat div#lens {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  border-radius: 50%;
+  z-index: 1;
+}
+/* line 190, ../sass/loupe.scss */
+div#lens-container.flat div#lens::before {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 20%;
+  left: 25%;
+  top: 5%;
+  border-radius: 50%;
+}
+/* line 201, ../sass/loupe.scss */
+div#lens-container.flat div#lens-image-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+/* line 205, ../sass/loupe.scss */
+div#lens-container.flat div#lens-image-container img#lens-image {
+  position: absolute;
+}
+/* line 82, ../sass/loupe.scss */
+div#lens-container.flat div#lens {
+  overflow: hidden;
+  -moz-box-shadow: 0px 0px 0px 1px #655c3b, 0px 0px 10px 0px rgba(201, 193, 163, 0.25) inset, 0px 0px 3px 1px rgba(201, 193, 163, 0.25) inset;
+  -webkit-box-shadow: 0px 0px 0px 1px #655c3b, 0px 0px 10px 0px rgba(201, 193, 163, 0.25) inset, 0px 0px 3px 1px rgba(201, 193, 163, 0.25) inset;
+  box-shadow: 0px 0px 0px 1px #655c3b, 0px 0px 10px 0px rgba(201, 193, 163, 0.25) inset, 0px 0px 3px 1px rgba(201, 193, 163, 0.25) inset;
+  background: -moz-radial-gradient(center center, rgba(1, 161, 140, 0) 40%, rgba(1, 161, 140, 0.1)), -moz-radial-gradient(center center, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 100%);
+  background: -webkit-radial-gradient(center center, rgba(1, 161, 140, 0) 40%, rgba(1, 161, 140, 0.1)), -webkit-radial-gradient(center center, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 100%);
+  background: radial-gradient(center center, rgba(1, 161, 140, 0) 40%, rgba(1, 161, 140, 0.1)), radial-gradient(center center, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 100%);
+}
+/* line 96, ../sass/loupe.scss */
+div#lens-container.flat div#lens::before {
+  width: 100%;
+  height: 100%;
+  background: -moz-radial-gradient(center center, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%);
+  background: -webkit-radial-gradient(center center, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%);
+  background: radial-gradient(center center, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%);
+}
+/* line 233, ../sass/loupe.scss */
+div#lens-container.glossy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  transition: width 0.3s, height 0.3s, margin 0.3s;
+  background: #333333;
+  background: -moz-linear-gradient(290deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 51%), -moz-radial-gradient(center center, #333333, #1a1a1a);
+  background: -webkit-linear-gradient(290deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 51%), -webkit-radial-gradient(center center, #333333, #1a1a1a);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 51%), radial-gradient(center center, #333333, #1a1a1a);
+  -moz-box-shadow: 0px 3px 5px -3px #b3b3b3 inset, 0px -3px 5px -3px #1a1a1a inset, 0px -3px 5px -3px black inset, 0px 3px 15px -3px black, 0px 3px 1px -1px #333333, 0px 0px 1px 1px #333333;
+  -webkit-box-shadow: 0px 3px 5px -3px #b3b3b3 inset, 0px -3px 5px -3px #1a1a1a inset, 0px -3px 5px -3px black inset, 0px 3px 15px -3px black, 0px 3px 1px -1px #333333, 0px 0px 1px 1px #333333;
+  box-shadow: 0px 3px 5px -3px #b3b3b3 inset, 0px -3px 5px -3px #1a1a1a inset, 0px -3px 5px -3px black inset, 0px 3px 15px -3px black, 0px 3px 1px -1px #333333, 0px 0px 1px 1px #333333;
+}
+/* line 173, ../sass/loupe.scss */
+div#lens-container.glossy:hover {
+  cursor: pointer;
+}
+/* line 184, ../sass/loupe.scss */
+div#lens-container.glossy:active {
+  cursor: none;
+}
+/* line 186, ../sass/loupe.scss */
+div#lens-container.glossy div#lens {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  border-radius: 50%;
+  z-index: 1;
+}
+/* line 190, ../sass/loupe.scss */
+div#lens-container.glossy div#lens::before {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 20%;
+  left: 25%;
+  top: 5%;
+  border-radius: 50%;
+}
+/* line 201, ../sass/loupe.scss */
+div#lens-container.glossy div#lens-image-container {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+/* line 205, ../sass/loupe.scss */
+div#lens-container.glossy div#lens-image-container img#lens-image {
+  position: absolute;
+}
+/* line 38, ../sass/loupe.scss */
+div#lens-container.glossy div#lens {
   -moz-box-shadow: 0px 0px 5px 0px rgba(77, 77, 77, 0.3) inset, 0px 5px 15px -5px black, 0px 0px 2px 1px black, 0px -3px 7px -3px #4d4d4d, 0px 0px 100px 0px rgba(0, 0, 0, 0.3), 0px 0px 10px 0px rgba(255, 255, 255, 0.5) inset, 0px 0px 75px 0px rgba(0, 0, 0, 0.3) inset;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(77, 77, 77, 0.3) inset, 0px 5px 15px -5px black, 0px 0px 2px 1px black, 0px -3px 7px -3px #4d4d4d, 0px 0px 100px 0px rgba(0, 0, 0, 0.3), 0px 0px 10px 0px rgba(255, 255, 255, 0.5) inset, 0px 0px 75px 0px rgba(0, 0, 0, 0.3) inset;
   box-shadow: 0px 0px 5px 0px rgba(77, 77, 77, 0.3) inset, 0px 5px 15px -5px black, 0px 0px 2px 1px black, 0px -3px 7px -3px #4d4d4d, 0px 0px 100px 0px rgba(0, 0, 0, 0.3), 0px 0px 10px 0px rgba(255, 255, 255, 0.5) inset, 0px 0px 75px 0px rgba(0, 0, 0, 0.3) inset;
@@ -180,10 +309,28 @@ div#lens-container div#lens {
   background: -webkit-radial-gradient(center center, rgba(1, 161, 140, 0) 40%, rgba(1, 161, 140, 0.2));
   background: radial-gradient(center center, rgba(1, 161, 140, 0) 40%, rgba(1, 161, 140, 0.2));
 }
-/* line 70, ../sass/loupe.scss */
-div#lens-container div#lens::before {
+/* line 54, ../sass/loupe.scss */
+div#lens-container.glossy div#lens::before {
   background: rgba(255, 255, 255, 0.3);
   background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
   background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+}
+
+/* line 9, ../sass/screen.scss */
+div#page {
+  padding: 5em;
+}
+/* line 13, ../sass/screen.scss */
+div#page div#the-container {
+  position: relative;
+  width: 40em;
+  height: auto;
+  padding: 3em;
+  border: 2px solid #333;
+}
+/* line 20, ../sass/screen.scss */
+div#page div#the-container img#the-image {
+  width: 100%;
+  height: 100%;
 }

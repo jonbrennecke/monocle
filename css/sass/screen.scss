@@ -5,3 +5,21 @@
 
 @import "compass/reset";
 @import "loupe";
+
+div#page {
+	padding: 5em;
+
+	// image box 
+	div#the-container {
+		position: relative;
+		width: 40em;
+		height: auto;
+		padding: 3em;
+		border: 2px solid #333;
+
+		img#the-image {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}

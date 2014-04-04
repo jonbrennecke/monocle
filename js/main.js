@@ -1,14 +1,52 @@
 $( document ).ready( function(){
 
 
-	function Lens( img, opt ) {
+	/**
+	* Magnification loupe object
+	*
+	* @param img - DOM image node upon which to place the loupe
+	* @param opt - (optional) json array of options
+	* 
+	* parameters = {
+	* 	zoom: <int> level of magnification ( default is 2 )
+	*	size: <string> or <int> width/height of the loupe (eg "100px") 
+	*	class: <string> name of the CSS class to give the containing element ( defaults to 'glossy' )
+	* }
+	* 
+	* 
+	*/
+	function Loupe( img, opt ) {
 
 		// parameters
 		this.img = img;
-		this.zoom = opt.zoom ? opt.zoom : 2
+		this.zoom = opt.zoom || 2;
+
+		var className =  opt.class || "glossy";
 
 		// create the loupe
-		this.div = $("<div id='lens-container'><div id='lens'></div></div>").appendTo( "#the-container" );
+		this.div = $("<div id='lens-container' class='" + className + "'><div id='lens'></div></div>").appendTo( "#the-container" );
+
+		this.div.width( opt.size ).height( opt.size );
+
+		// after setting the size (which may be in px, em, or other units) get the computed size (in px)
+		this.size = +window.getComputedStyle( this.div[0], null ).width.replace( 'px', '' );
+
+		// this.div.hover( 
+		// 	// mouseover
+		// 	function () {
+		// 		$( this )
+		// 			.animate({ width : "+=10px", height : "+=10px" },{ duration : 10, easing : "easeInQuad" })
+		// 			.promise()
+		// 			.done( function () {
+		// 				// $( this ).animate({ width : "-=10px", height : "-=10px" },{ duration : 10, easing : "easeInQuad" });
+		// 			});
+		// 	}, 
+
+		// 	// mouseout
+		// 	function () {
+		// 		// $( this ).animate({ width : "-=10px", height : "-=10px" },{ duration : 10, easing : "easeInQuad" });
+		// 	}
+		// );
 
 		// wait for the image to load or we'll have problems...
 		this.img.onload = function(){
@@ -20,16 +58,18 @@ $( document ).ready( function(){
 				create : this.create.bind( this ),
 				drag : this.drag.bind( this )
 
-			}).css("position", "absolute");
+			});
 
 		}.bind(this)
 	};
 
-	Lens.prototype = {
+	Loupe.prototype = {
 
 		/**
+		 * called on creation of the loupe
 		 *
-		 *
+		 * @param e - event object 
+		 * @param ui - drag properties
 		 */
 		create : function ( e, ui ) {
 
@@ -48,15 +88,16 @@ $( document ).ready( function(){
 
 
 		/**
+		 * called on each drag event
 		 *
 		 * @param e - event object 
-		 * @param ui - 
+		 * @param ui - drag properties
 		 */
 		drag : function ( e, ui ) {
 
 			$( '#lens-image' ).offset({
-				top : - ( ui.offset.top * this.zoom - ui.offset.top ),
-				left : - ( ui.offset.left * this.zoom - ui.offset.left ) 
+				top : - ( ui.offset.top * this.zoom - ui.offset.top ) + this.size / 2,
+				left : - ( ui.offset.left * this.zoom - ui.offset.left ) + this.size / 2
 			});
  
 		}
@@ -65,13 +106,13 @@ $( document ).ready( function(){
 
 	/**
 	 *
-	 * Convex Lens magnifier
+	 * Magnifier Loupe as a jQuery plugin
 	 *
 	 *
 	 * @param json array opt - array of options
 	 *
 	 */
-	$.fn.convex = function ( opt ) {
+	$.fn.loupe = function ( opt ) {
 
 		return $( this ).each( function ( ) {
 
@@ -80,17 +121,18 @@ $( document ).ready( function(){
 
 				// determine if the lens already exists
 				if ( !$("#lens").length ) {
-					var lens = new Lens( this, opt );
+					var lens = new Loupe( this, opt );
 				}
 
 			}
-			// TODO background image
 
 		});
 	}
 
-	$("#the-image").convex({
-		zoom : 1.5
+	$("#the-image").loupe({
+		zoom : 1.5,
+		size : "10em",
+		class : "flat" // "Flat", "Metro"
 	});
 
 

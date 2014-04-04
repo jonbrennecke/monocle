@@ -1,19 +1,8 @@
 
-// compass imports
+// compass imports for cross-browser support
 @import "compass/css3/images";
 @import "compass/css3/box-shadow";
-
-
-// image box 
-div#the-container {
-	width: 50em;
-	height: auto;
-
-	img#the-image {
-		width: 100%;
-		height: 100%;
-	}
-}
+@import "compass/css3/transition";
 
 
 /**
@@ -24,7 +13,7 @@ div#the-container {
  * Coloring/Design for loupe
  *
  */
-@mixin style3D {
+@mixin glossy {
 
 	// vars
 	$border-color: #333;
@@ -45,11 +34,6 @@ div#the-container {
 		0px 3px 1px -1px $border-color,
 		0px 0px 1px 1px $border-color 
 	);
-
-	&:hover  {
-		width: 210px;
-		height: 210px;
-	}
 
 	div#lens {
 
@@ -82,22 +66,27 @@ div#the-container {
  * Coloring/Design for loupe
  *
  */
-@mixin styleFlat {
+@mixin flat {
 
 	// vars
-	$border-color: #333;
+	$border-color: #655c3b;
 
 	// ---------------- #lens-container ----------------
 
-	// border: 1px solid #fff;
 	@include box-shadow(
-		0px 0px 1px 1px #999,
-		0px -1px 1px 1px #fff,
+		0px 0px 1px 1px $border-color,
+		0px -1px 1px 1px lighten($border-color,60%),
 		0px 3px 15px -3px #000
 	);
 
 	div#lens {
 		overflow: hidden;
+
+		@include box-shadow(
+			0px 0px 0px 1px  $border-color,
+			0px 0px 10px 0px rgba( lighten( $border-color,40%),0.25) inset,
+			0px 0px 3px 1px rgba( lighten( $border-color,40%),0.25) inset
+		);
 
 		@include background(
 			radial-gradient(color-stops(rgba(#01a18c,0) 40%,  rgba(#01a18c,0.1)), center center),
@@ -107,7 +96,7 @@ div#the-container {
 		&::before {
 			width: 100%;
 			height: 100%;
-			@include background( radial-gradient( color-stops(rgba(#fff,0.4), rgba(#fff,0) 70% ), center center) );
+			@include background( radial-gradient( color-stops(rgba(#fff,0.2), rgba(#fff,0) 70% ), center center) );
 		}
 	}
 }
@@ -121,7 +110,7 @@ div#the-container {
  * Coloring/Design for loupe
  *
  */
-@mixin styleMetro {
+@mixin metro {
 
 	// vars
 	$border-color: #ef3c43;
@@ -145,41 +134,57 @@ div#the-container {
 }
 
 
+
+// for parsimony, some styles that are repeated for both #lens and #lens-image-container
+// within the 'loupe' mixin below
+@mixin inner ( $size, $border-width ) {
+	position: absolute;
+	width: percentage( ( $size - $border-width * 2 ) / $size );
+	height: percentage( ( $size - $border-width * 2 ) / $size );
+	top: percentage($border-width / $size);
+	left: percentage($border-width / $size);
+	border-radius: 50%;
+}
+
 /*
  *
  * Draggable Lens element
  * 
- * basic positioning and sizing; the design is mostly applied in the 'style' mixin
+ * basic positioning and sizing; the design is mostly applied in the style mixin
  * 
  */
-div#lens-container {
+
+@mixin loupe ( $style, $border-width ) {
 	
 	// vars
 	$size: 200px;
-	$border-width: 10px;
 
+	position: absolute;
 	top: 0;
 	left: 0;
 	height: $size;
 	width: $size;	
 	border-radius: 50%;
 
+	$time: 0.3s;
+	transition: width $time, height $time, margin $time;
+
 	// the cursor disappears when clicked
-	&:hover { cursor: pointer; }
-	&:active { cursor: none; }
-	
-	// for parsimony, some styles that are repeated for both #lens and #lens-image-container
-	@mixin inner {
-		position: absolute;
-		width: ( $size - $border-width * 2 );
-		height: ( $size - $border-width * 2 );
-		top: $border-width;
-		left: $border-width;
-		border-radius: 50%;
+	&:hover { 
+		cursor: pointer; 
+
+		// expand animation
+		$factor: 0.25;
+		// width: ($size * ($factor + 1) );
+		// height: ($size * ($factor + 1) );
+		// margin-left: -($size * ($factor / 2) );
+		// margin-top: -($size * ($factor / 2) );
 	}
 
+	&:active { cursor: none; }
+	
 	div#lens {
-		@include inner;
+		@include inner( $size, $border-width );
 		z-index: 1;
 	
 		&::before {
@@ -194,7 +199,7 @@ div#lens-container {
 	}
 
 	div#lens-image-container {
-		@include inner;
+		@include inner( $size, $border-width );
 		overflow: hidden;
 
 		img#lens-image { 
@@ -203,5 +208,38 @@ div#lens-container {
 	}
 
 	// include the coloring declarations
-	@include style3D;
+	// unfortunately, you can't yet '@include $style' or '@include #{$style}' in sass
+	// so we have to go the looong way around
+	// 
+	// ( default to 'aqua' )
+	@if $style == "metro" {
+		@include metro;
+	}
+	@else if $style == "flat" {
+		@include flat;
+	}
+	@else {
+		@include glossy;
+	}
+}
+
+
+// 
+div#lens-container {
+
+	$styles: metro flat glossy;
+
+	@each $style in $styles {
+		&.#{$style} {
+
+			@if $style == "flat" {
+				@include loupe( $style, 0px );
+			}
+			@else {
+				@include loupe( $style, 10px );
+			}
+
+		}
+	}
+
 }
