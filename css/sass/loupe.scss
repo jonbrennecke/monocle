@@ -157,24 +157,26 @@
 	background: $border-color;
 	// @include box-shadow( 0px 0px 150px rgba(#000,0.2) );
 	@include background(
-		linear-gradient( top, color-stops( #fff, #999 ) )
+		linear-gradient( top, color-stops( $border-color, darken($border-color,50%) ) )
 	);
 
 	@include box-shadow(
-		0px 50px 50px -50px red,
-		0px 50px 50px -50px rgba(#000,0.7)
+		0px 20px 50px -20px rgba(#000,0.7),
+		0px -1px 2px -1px rgba(#000,0.5) inset,
+		0px 1px 2px -1px rgba(#fff,1) inset
 	);
 
 	div#lens {
 		overflow: hidden;
-		@include background(
-			linear-gradient( top, color-stops( #999, #fff ) )
-		);
 		z-index: 0;
 
-		&::before {
-			// @include background( linear-gradient( 200deg, color-stops( rgba(#fff,0.3), rgba(#fff,0.3) 20%, rgba(#fff,0) 20% )) );
-		}
+		@include box-shadow(
+			0px 3px 3px -3px rgba(#000,0.5) inset 
+		);
+
+		@include background(
+			linear-gradient( top, color-stops( darken($border-color,50%), $border-color ) )
+		);
 	}
 
 	div#lens-image-container {
@@ -182,6 +184,10 @@
 		height: 85%;
 		top: 7.5%;
 		left: 7.5%;
+
+		@include box-shadow(
+			0px 0px 1px #333
+		);
 
 		&::before {
 			content: '';
@@ -192,7 +198,8 @@
 			border-radius: 50%;
 
 			@include box-shadow(
-				0px 50px 50px -40px rgba(#000,0.7) inset
+				0px 50px 50px -40px rgba(#000,0.5) inset,
+				0px 0px 15px rgba(#fff,0.1) inset
 			);
 		}
 	}
@@ -272,7 +279,7 @@
 	// unfortunately, you can't yet '@include $style' or '@include #{$style}' in sass
 	// so we have to go the looong way around
 	// 
-	// ( default to 'aqua' )
+	// ( default to 'glossy' )
 	@if $style == "metro" {
 		@include metro;
 	}
