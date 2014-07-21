@@ -232,7 +232,7 @@
  */
 
 @mixin loupe ( $style, $border-width ) {
-	
+
 	// vars
 	$size: 200px;
 
@@ -244,17 +244,17 @@
 	border-radius: 50%;
 
 	$time: 0.3s;
-	transition: width $time, height $time, margin $time;
+	@include transition( width $time, height $time, margin $time);
 
 	// the cursor disappears when clicked
 	&:hover { cursor: pointer; }
 
 	&:active { cursor: none; }
-	
+
 	div#lens {
 		@include inner( $size, $border-width );
 		z-index: 1;
-	
+
 		&::before {
 			content: '';
 			position: absolute;
@@ -317,3 +317,4 @@ div#lens-container {
 	}
 
 }
+    
