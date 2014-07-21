@@ -43,7 +43,7 @@ function Loupe( img, opt ) {
 
 	// create the loupe
 	this.div = $("<div id='lens-container' class='" +  this.opt.className + "'><div id='lens'></div></div>")
-		.appendTo( "#the-container" );
+		.appendTo( this.img.parentNode );
 
 	this.div.width( this.opt.size ).height( this.opt.size );
 
